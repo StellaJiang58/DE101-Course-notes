@@ -1,6 +1,12 @@
 # Variable: A storage location identified by its name, containing some value.
 # Question: Assign a value of 10 to variable a and 20 to variable b
 # Question: Store the result of a + b in a variable c and print it. What is the result of a + b?
+My ans:
+a = 10
+b = 20
+c = a + b 
+print(c) #30 
+
 
 s = '  Some string '
 # Question: How do you remove the empty spaces in front of and behind the string s?
@@ -12,12 +18,16 @@ l = [1, 2, 3, 4]
 
 # Question: How do you access the elements in index 0 and 3? Print the results.
 ## NOTE: lists retain the order of elements in it but dictionary doesn't
+print(l[0]) # print 1
+print(l[3]) # print 4
 
 ## Dictionary: A collection of key-value pairs, where each key is mapped to a value using a hash function. Provides fast data retrieval based on keys.
 d = {'a': 1, 'b': 2}
 
 # Question: How do you access the values associated with keys 'a' and 'b'?
 ## NOTE: The dictionary cannot have duplicate keys
+print(d.get('a')) 
+print(d.get('b'))
 
 ## Set: A collection of unique elements that do not allow duplicates
 my_set = set()
@@ -26,6 +36,7 @@ my_set.add(10)
 my_set.add(10)
 
 # Question: What will be the output of my_set?
+print(my_set) #10 because of unique elements
 
 ## Tuple: A collection of immutable (non-changeable) elements, tuples retain their order once created.
 my_tuple = (1, 'hello', 3.14)
@@ -35,6 +46,8 @@ my_tuple = (1, 'hello', 3.14)
 # Accessing elements by index
 
 # Question: How do you access the elements in index 0 and 1 of my_tuple?
+
+
 
 # Counting occurrences of an element
 count_tuple = (1, 2, 3, 1, 1, 2)
