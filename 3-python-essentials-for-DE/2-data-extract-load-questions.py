@@ -14,6 +14,7 @@
 # Question: How do you read data from a sqlite3 database and write to a DuckDB database?
 # Hint: Look at importing the database libraries for sqlite3 and duckdb and create connections to talk to the respective databases
 
+
 # Fetch data from the SQLite Customer table
 
 # Insert data into the DuckDB Customer table
@@ -65,3 +66,107 @@ url = "https://api.coincap.io/v2/exchanges"
 # Questions: Use beatiful soup to scrape the below website and print all the links in that website
 # URL of the website to scrape
 url = 'https://example.com'
+
+
+# SQLite3
+# 	•	What it is: A lightweight, file-based database that doesn’t require a server.
+# 	•	Best for:
+# 	•	Small-scale applications.
+# 	•	Prototyping and testing.
+# 	•	Single-user or embedded applications.
+# 	•	Strengths:
+# 	•	Requires no setup (zero-configuration).
+# 	•	Portable as it’s a single-file database.
+# 	•	Excellent for lightweight data storage.
+# 	•	Weaknesses:
+# 	•	Limited scalability.
+# 	•	Lacks advanced features like full-text search, stored procedures, or extensive concurrency.
+
+# Using SQLite3 in Python:
+import sqlite3 
+# Connect to the database (or create one if it doesn't exist)
+conn = sqlite3.connect('example.db')
+# Create a cursor object
+cursor = conn.cursor()
+
+# Execute SQL commands
+cursor.execute("CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY, name TEXT)")
+cursor.execute("INSERT INTO users (name) VALUES ('Alice')")
+
+# Commit and close
+conn.commit()
+conn.close()
+
+
+# PostgreSQL
+# 	•	What it is: An advanced, open-source, relational database management system (RDBMS).
+# 	•	Best for:
+# 	•	Large-scale applications.
+# 	•	Complex queries and operations.
+# 	•	Applications requiring high reliability and data integrity.
+# 	•	Strengths:
+# 	•	Support for advanced features like JSON/JSONB, full-text search, and window functions.
+# 	•	Extensible with plugins and custom functions.
+# 	•	ACID compliance ensures high reliability.
+# 	•	Weaknesses:
+# 	•	Heavier setup and maintenance compared to SQLite.
+# 	•	May be overkill for small applications.
+
+# Using PostgreSQL in Python (with psycopg2):
+import psycopg2
+
+# Connect to the database
+conn = psycopg2.connect(
+    dbname='your_database',
+    user='your_user',
+    password='your_password',
+    host='localhost',
+    port='5432'
+)
+
+# Create a cursor object
+cursor = conn.cursor()
+
+# Execute SQL commands
+cursor.execute("CREATE TABLE IF NOT EXISTS users (id SERIAL PRIMARY KEY, name TEXT)")
+cursor.execute("INSERT INTO users (name) VALUES ('Alice')")
+
+# Commit and close
+conn.commit()
+conn.close()
+
+# MySQL
+# 	•	What it is: Another popular open-source RDBMS.
+# 	•	Best for:
+# 	•	Web applications (e.g., LAMP stack).
+# 	•	Medium to large-scale applications.
+# 	•	Applications requiring high-speed performance for reads.
+# 	•	Strengths:
+# 	•	High performance for read-heavy workloads.
+# 	•	Wide adoption and community support.
+# 	•	Offers replication for scaling reads.
+# 	•	Weaknesses:
+# 	•	Historically less advanced than PostgreSQL for complex operations (although this has improved).
+# 	•	Some licensing constraints for enterprise use (MySQL is now owned by Oracle).
+
+# Using MySQL in Python (with mysql-connector-python):
+import mysql.connector
+
+# Connect to the database
+conn = mysql.connector.connect(
+    host='localhost',
+    user='your_user',
+    password='your_password',
+    database='your_database'
+)
+
+# Create a cursor object
+cursor = conn.cursor()
+
+# Execute SQL commands
+cursor.execute("CREATE TABLE IF NOT EXISTS users (id INT AUTO_INCREMENT PRIMARY KEY, name VARCHAR(255))")
+cursor.execute("INSERT INTO users (name) VALUES ('Alice')")
+
+# Commit and close
+conn.commit()
+conn.close()
