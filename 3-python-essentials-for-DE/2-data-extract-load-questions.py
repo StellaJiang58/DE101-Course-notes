@@ -13,11 +13,16 @@
 # Databases: When reading or writing to a database we use a database driver. Database drivers are libraries that we can use to read or write to a database.
 # Question: How do you read data from a sqlite3 database and write to a DuckDB database?
 # Hint: Look at importing the database libraries for sqlite3 and duckdb and create connections to talk to the respective databases
-
+import sqlite3 
+sqlite_conn = sqlite3.connect("tpch.db")
 
 # Fetch data from the SQLite Customer table
+customers = sqlite_conn.execute("select * from customer").fetchall()
+import duckdb
+duckdb_conn = duckdb.connect("duckdb.db") # Duckdb connection string
 
 # Insert data into the DuckDB Customer table
+
 
 # Hint: Look for Commit and close the connections
 # Commit tells the DB connection to send the data to the database and commit it, if you don't commit the data will not be inserted
