@@ -107,11 +107,7 @@ insert_data = [
         exchange["exchangeId"],
         exchange["name"],
         int(exchange["rank"]),
-        (
-            float(exchange["percentTotalVolume"])
-            if exchange["percentTotalVolume"]
-            else None
-        ),
+        float(exchange["percentTotalVolume"]) if exchange["percentTotalVolume"] else None,
         float(exchange["volumeUsd"]) if exchange["volumeUsd"] else None,
         exchange["tradingPairs"],
         exchange["socket"],
@@ -121,15 +117,35 @@ insert_data = [
     for exchange in data
 ]
 duckdb_conn.executemany(insert_query, insert_data)
+# Commit and close the connection
+duckdb_conn.commit()
+duckdb_conn.close()
+
 
 # Local disk
 # Question: How do you read a CSV file from local disk and write it to a database?
 # Look up open function with csvreader for python
+import csv
+data_location = = "./data/customers.csv"
+with (data_location, "r", newline = "") as csvfile:
+    csvreader = csv.reader(csvfile)
+    next(csvreader)
+    for row in csvreader:
+        print(row)
 
 # Web scraping
 # Questions: Use beatiful soup to scrape the below website and print all the links in that website
-# URL of the website to scrape
-url = 'https://example.com'
+# URL of the website to scrape url = 'https://example.com'
+import requests
+from bs4 import BeautifulSoup
+# Send a GET request to the website
+response = requests.get(url)
+# Parse the HTML content of the webpage
+soup = BeautifulSoup(response.text,'html.parser')
+# Example: Find and print all the links on the webpage
+for link in soup.find_all('a'):
+    print(link.get('href'))
+
 
 
 # SQLite3
