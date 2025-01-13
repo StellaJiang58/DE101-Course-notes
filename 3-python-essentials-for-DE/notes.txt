@@ -1,1 +1,32 @@
+1.What does knowing Python mean for data engineering? 
+  Memory is the space used by a running process to store any information that it may need for its operation. The computer’s RAM is used for this purpose.
 
+  Disk is used to store data. When we process data from disk (read data from csv, etc) it means that our process is reading data from disk into memory and then     processing it. Computers generally use HDD or SSD to store your files.
+  
+  RAM is expensive, while disk (HDD, SSD) is cheaper. One issue with data processing is that the memory available to use is often less than the size of the data to be processed. This is when we use distributed systems like Spark or systems like DuckDB, which enable us to process larger-than-memory data.
+
+
+Python basics
+1. Variables: A storage location identified by its name, containing some value.
+
+2. Operations: We can do any operation (arithmetic for numbers, string transformation for text) on variables
+
+3. Data Structures: They are ways of representing data. Each has its own pros and cons and places where it is the right fit. 3.1. List: A collection of elements that can be accessed by knowing the element’s location (aka index). Lists retain the order of elements in them.
+
+3.2. Dictionary: A collection of key-value pairs where each key is mapped to a value using a hash function. The dictionary provides fast data retrieval based on keys.
+
+3.3. Set: A collection of unique elements that do not allow duplicates.
+
+3.4. Tuple: A collection of immutable(non changeable) elements, tuples retain their order once created.
+
+Loops: Looping allows a specific chunk of code to be repeated several times.
+
+4.1. Comprehension: Comprehension is a shorthand way of writing a loop
+
+5. Functions: A block of code that can be reused as needed. This allows us to have logic defined in one place, making it easy to maintain and use. Using it in a location is referred to as calling the function.
+
+6. Class and Objects: Think of a class as a blueprint and objects as things created based on that blueprint.
+
+7. Library: Libraries are code that can be reused. Python comes with standard libraries for common operations, such as a datetime library to work with time (although there are better libraries)—Standard library .
+
+8. Exception handling: When an error occurs, we need our code to gracefully handle it without stopping.
