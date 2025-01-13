@@ -22,46 +22,105 @@ import duckdb
 duckdb_conn = duckdb.connect("duckdb.db") # Duckdb connection string
 
 # Insert data into the DuckDB Customer table
-
+insert_query = f""" 
+insert into customer (customer_id, zipcode, city, state_code, datetime_created, datetime_updated) 
+values (?, ?, ?, ?, ?,?)"""
+duckdb_conn.executemany(insert_query, customers)# insert into query
 
 # Hint: Look for Commit and close the connections
 # Commit tells the DB connection to send the data to the database and commit it, if you don't commit the data will not be inserted
-
+duckdb_conn.commit()
 # We should close the connection, as DB connections are expensive
+sqlite3.close()
+duckdb_conn.close()
 
 # Cloud storage
 # Question: How do you read data from the S3 location given below and write the data to a DuckDB database?
 # Data source: https://docs.opendata.aws/noaa-ghcn-pds/readme.html station data at path "csv.gz/by_station/ASN00002022.csv.gz"
 # Hint: Use boto3 client with UNSIGNED config to access the S3 bucket
 # Hint: The data will be zipped you have to unzip it and decode it to utf-8
+import csv
+import gzip
+from io import StringIO
+
+import boto3 
+import duckdb
+from botocore import UNSIGNED
+from botocore.client import Config
 
 # AWS S3 bucket and file details
 bucket_name = "noaa-ghcn-pds"
 file_key = "csv.gz/by_station/ASN00002022.csv.gz"
 # Create a boto3 client with anonymous access
+s3_client = boto3.client("s3", config= Config(signature_version = UNSIGNED))
 
 # Download the CSV file from S3
+response = s3_client.get_object(Bucket=bucket_name, Key = file_key)
+response["Body"].read()
+
 # Decompress the gzip data
+csv_data = gzip.decompress(compress_data).decode(uft-8)
+
 # Read the CSV file using csv.reader
+csv_reader= csv.reader(StringIO(csv_data))
+data = list(csv_reader)
+
 # Connect to the DuckDB database (assume WeatherData table exists)
+duckdb_conn = duckdb.connect("duckdb.db")
 
 # Insert data into the DuckDB WeatherData table
+insert_query = """
+insert into WeatherData (id, date, element, value, m_flag, q_flag, s_flag, obs_time)
+value(?, ?, ?, ?, ?, ?, ?, ?, ?)"""
+duckdb_conn.executemange(insert_query, data[:1000000]
+#commit and close connection
+duckdb_conn.commit()
+duckdb_conn.close()
+
 
 # API
 # Question: How do you read data from the CoinCap API given below and write the data to a DuckDB database?
 # URL: "https://api.coincap.io/v2/exchanges"
 # Hint: use requests library
-
+import duckdb
+import requests
 # Define the API endpoint
 url = "https://api.coincap.io/v2/exchanges"
 
 # Fetch data from the CoinCap API
+response = requests.get(url)
+data = response.json()["data"]
+
 # Connect to the DuckDB database
+duckdb_conn = duckdb.connect("duckdb.db")
 
 # Insert data into the DuckDB Exchanges table
+insert_query = """
+INSERT INTO Exchanges (id, name, rank, percentTotalVolume, volumeUsd, tradingPairs, socket, exchangeUrl, updated)
+VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+"""
+
 # Prepare data for insertion
 # Hint: Ensure that the data types of the data to be inserted is compatible with DuckDBs data column types in ./setup_db.py
-
+insert_data = [
+    (
+        exchange["exchangeId"],
+        exchange["name"],
+        int(exchange["rank"]),
+        (
+            float(exchange["percentTotalVolume"])
+            if exchange["percentTotalVolume"]
+            else None
+        ),
+        float(exchange["volumeUsd"]) if exchange["volumeUsd"] else None,
+        exchange["tradingPairs"],
+        exchange["socket"],
+        exchange["exchangeUrl"],
+        int(exchange["updated"]),
+    )
+    for exchange in data
+]
+duckdb_conn.executemany(insert_query, insert_data)
 
 # Local disk
 # Question: How do you read a CSV file from local disk and write it to a database?
