@@ -127,11 +127,14 @@ duckdb_conn.close()
 # Look up open function with csvreader for python
 import csv
 data_location = = "./data/customers.csv"
-with (data_location, "r", newline = "") as csvfile:
+# newline="": Ensures the correct handling of newlines in CSV files, avoiding issues with extra blank lines.
+with (data_location, "r", newline = "") as csvfile: #With: Automatically handles file closing, even if an error occurs.
     csvreader = csv.reader(csvfile)
+    # Skips the first row of the CSV file (often used to skip the header row).
     next(csvreader)
-    for row in csvreader:
+    for row in csvreader: #Iterates through each row in the CSV file after skipping the header
         print(row)
+        print(row[0])  # Print only the first column
 
 # Web scraping
 # Questions: Use beatiful soup to scrape the below website and print all the links in that website
